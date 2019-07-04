@@ -1,1 +1,24 @@
-
+version: '2'
+services:
+    distrib:
+       container_name: alpine
+       image: alpine
+       links:
+         - tomcat
+         - maven
+    tomcat:
+       container_name: tomcat_build_name
+       image: tomcat
+       links:
+         - maven
+       ports:
+         - "8080:8080"
+       volumes_from:
+         - maven
+    maven:
+       container_name: maven_build_name
+       build:
+        context: .
+        dockerfile: Dockerfile
+       volumes:
+         - 
