@@ -1,16 +1,18 @@
 version: '2'
 services:
-    tomcat:
-       container_name: tomcat_build_name
-       image: tomcat
-       links:
-         - maven
-       ports:
-         - "8080:8080"
-       volumes_from:
-         - maven
-    maven:
-       container_name: maven_build_name
-       build:
-        context: .
-        dockerfile: Dockerfile
+       tomcat:
+         container_name: tomcat_build_name
+         image: tomcat
+         ports:
+           - "8080:8080"
+         volumes:
+           - data-volume:/usr/local/tomcat/webapps/
+       maven:
+         container_name: maven_build_name
+         build:
+           context: .
+           dockerfile: Dockerfile
+         volumes:
+           - data-volume:/boxfuse-sample-java-war-hello/target/
+volumes:
+  data-volume:
